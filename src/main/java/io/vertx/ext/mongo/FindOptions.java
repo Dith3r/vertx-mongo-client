@@ -1,5 +1,6 @@
 package io.vertx.ext.mongo;
 
+import com.mongodb.client.model.Collation;
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.json.JsonObject;
 
@@ -31,6 +32,7 @@ public class FindOptions {
   private int limit;
   private int skip;
   private int batchSize;
+  private Collation collation;
 
   /**
    * Default constructor
@@ -41,12 +43,13 @@ public class FindOptions {
     this.limit = DEFAULT_LIMIT;
     this.skip = DEFAULT_SKIP;
     this.batchSize = DEFAULT_BATCH_SIZE;
+    this.collation = null;
   }
 
   /**
    * Copy constructor
    *
-   * @param options  the one to copy
+   * @param options the one to copy
    */
   public FindOptions(FindOptions options) {
     this.fields = options.fields != null ? options.fields.copy() : new JsonObject();
@@ -54,12 +57,13 @@ public class FindOptions {
     this.limit = options.limit;
     this.skip = options.skip;
     this.batchSize = options.batchSize;
+    this.collation = options.collation;
   }
 
   /**
    * Constructor from JSON
    *
-   * @param options  the JSON
+   * @param options the JSON
    */
   public FindOptions(JsonObject options) {
     this();
@@ -69,7 +73,7 @@ public class FindOptions {
   /**
    * Convert to JSON
    *
-   * @return  the JSON
+   * @return the JSON
    */
   public JsonObject toJson() {
     JsonObject json = new JsonObject();
@@ -89,7 +93,7 @@ public class FindOptions {
   /**
    * Set the fields
    *
-   * @param fields  the fields
+   * @param fields the fields
    * @return reference to this, for fluency
    */
   public FindOptions setFields(JsonObject fields) {
@@ -100,7 +104,7 @@ public class FindOptions {
   /**
    * Get the sort document
    *
-   * @return  the sort document
+   * @return the sort document
    */
   public JsonObject getSort() {
     return sort;
@@ -109,7 +113,7 @@ public class FindOptions {
   /**
    * Set the sort document
    *
-   * @param sort  the sort document
+   * @param sort the sort document
    * @return reference to this, for fluency
    */
   public FindOptions setSort(JsonObject sort) {
@@ -119,7 +123,8 @@ public class FindOptions {
 
   /**
    * Get the limit - this determines the max number of rows to return
-   * @return  the limit
+   *
+   * @return the limit
    */
   public int getLimit() {
     return limit;
@@ -128,7 +133,7 @@ public class FindOptions {
   /**
    * Set the limit
    *
-   * @param limit  the limit
+   * @param limit the limit
    * @return reference to this, for fluency
    */
   public FindOptions setLimit(int limit) {
@@ -139,7 +144,7 @@ public class FindOptions {
   /**
    * Get the skip. This determines how many results to skip before returning results.
    *
-   * @return  the skip
+   * @return the skip
    */
   public int getSkip() {
     return skip;
@@ -148,7 +153,7 @@ public class FindOptions {
   /**
    * Set the skip
    *
-   * @param skip  the skip
+   * @param skip the skip
    * @return reference to this, for fluency
    */
   public FindOptions setSkip(int skip) {
@@ -196,5 +201,14 @@ public class FindOptions {
     result = 31 * result + skip;
     result = 31 * result + batchSize;
     return result;
+  }
+
+  public Collation getCollation() {
+    return collation;
+  }
+
+  public FindOptions setCollation(Collation collation) {
+    this.collation = collation;
+    return this;
   }
 }

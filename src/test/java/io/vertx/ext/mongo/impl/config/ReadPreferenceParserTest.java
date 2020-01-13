@@ -49,7 +49,7 @@ public class ReadPreferenceParserTest {
     new ReadPreferenceParser(null, config).readPreference();
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidTypeReadPreference() {
     JsonObject config = new JsonObject();
     config.put("readPreference", 123);
